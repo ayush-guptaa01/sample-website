@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
     <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
       <div className="navbar__container container">
         <a href="#home" className="navbar__logo" onClick={() => handleLinkClick('#home')}>
-          <div className="navbar__logo-icon">SG</div>
+          <div className="navbar__logo-icon">SAC</div>
           <span className="navbar__logo-text">Student Activity Centre</span>
         </a>
 

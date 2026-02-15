@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
                 <div className="footer__grid">
                     <div className="footer__brand">
                         <div className="footer__logo">
-                            <div className="footer__logo-icon">SG</div>
+                            <div className="footer__logo-icon">SAC</div>
                             <span className="footer__logo-text">Student Activity Centre</span>
                         </div>
                         <p className="footer__brand-desc">

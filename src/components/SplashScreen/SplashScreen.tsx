@@ -29,7 +29,7 @@ const SplashScreen: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
             {/* Central logo */}
             <div className={`splash__logo ${phase !== 'logo' ? 'splash__logo--shrink' : ''}`}>
                 <div className="splash__logo-shape">
-                    <span className="splash__logo-text">SG</span>
+                    <span className="splash__logo-text">SAC</span>
                 </div>
                 <div className="splash__logo-pulse"></div>
             </div>
@@ -59,7 +59,7 @@ const SplashScreen: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
 
             {/* Title & Tagline */}
             <div className={`splash__text ${phase === 'tagline' || phase === 'exit' ? 'splash__text--visible' : ''}`}>
-                <h1 className="splash__title">Student Activity Centre</h1>
+                <h1 className="splash__title">Welfare Centre</h1>
                 <p className="splash__tagline">IIITV — International Campus Diu</p>
                 <div className="splash__divider"></div>
                 <p className="splash__motto">Empowering Excellence</p>
