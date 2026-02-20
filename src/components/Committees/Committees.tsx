@@ -1,94 +1,76 @@
 import './Committees.css';
-import useTilt from '../../hooks/useTilt';
+import { organizationData } from '../../data/organizationData';
+import type { Committee, Club, Lead } from '../../data/organizationData';
 
-interface CommitteeData {
-    icon: string;
-    title: string;
-    description: string;
-    color: string;
-    highlights: string[];
-}
-
-const committees: CommitteeData[] = [
-    {
-        icon: '💻',
-        title: 'Technical Committee',
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
-        color: '#0ea5e9',
-        highlights: ['Horizon Tech Fest', 'Hackathons', 'Workshops', 'Tech Talks'],
-    },
-    {
-        icon: '🎭',
-        title: 'Cultural Committee',
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
-        color: '#f59e0b',
-        highlights: ['Cultural Fest', 'Art Exhibition', 'Music Night', 'Dance Events'],
-    },
-    {
-        icon: '⚽',
-        title: 'Sports Committee',
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
-        color: '#10b981',
-        highlights: ['Olympus Sports Fest', 'Inter-College', 'Fitness Drives', 'Tournaments'],
-    },
-];
-
-const CommitteeCard: React.FC<{ data: CommitteeData; index: number }> = ({ data, index }) => {
-    const tilt = useTilt(10);
-
+const LeadCard: React.FC<{ lead: Lead; role: string; type: 'committee' | 'club' }> = ({ lead, role, type }) => {
     return (
-        <div
-            className={`committees__card reveal reveal-delay-${index + 1}`}
-            style={{ '--card-accent': data.color } as React.CSSProperties}
-            ref={tilt.ref}
-            onMouseMove={tilt.onMouseMove}
-            onMouseLeave={tilt.onMouseLeave}
-        >
-            <div className="tilt-glow committees__card-glow"></div>
-            <div className="committees__card-icon">{data.icon}</div>
-            <h3 className="committees__card-title">{data.title}</h3>
-            <p className="committees__card-desc">{data.description}</p>
-            <div className="committees__card-highlights">
-                {data.highlights.map((h, hi) => (
-                    <span
-                        className="committees__tag"
-                        key={h}
-                        style={{ animationDelay: `${hi * 0.08}s` }}
-                    >
-                        {h}
-                    </span>
-                ))}
-            </div>
-            <div className="committees__card-image">
+        <div className={`lead-card lead-card--${type} reveal`}>
+            <div className="lead-photo">
                 <span className="committees__card-alt">
-                    {data.title} Activities Photo
+                    {lead.photoPlaceholder || 'Photo'}
                 </span>
             </div>
+            <div className="lead-info">
+                <span className="lead-role">{role}</span>
+                <h4 className="lead-name">{lead.name}</h4>
+                <p className="lead-desc">{lead.description}</p>
+            </div>
+        </div>
+    );
+};
+
+const ClubCard: React.FC<{ club: Club }> = ({ club }) => {
+    return (
+        <div className="club-card reveal">
+            <div className="club-logo-placeholder">
+                {club.logoPlaceholder}
+            </div>
+            <h3 className="club-name">{club.name}</h3>
+            <p className="club-desc">{club.description}</p>
+            <div className="club-leads">
+                <LeadCard lead={club.secretary} role="Secretary" type="club" />
+                <LeadCard lead={club.jointSecretary} role="Joint Secretary" type="club" />
+            </div>
+        </div>
+    );
+};
+
+export const CommitteeSection: React.FC<{ committee: Committee }> = ({ committee }) => {
+    return (
+        <div className="committee-section" id={committee.id} style={{ '--accent': committee.color } as React.CSSProperties}>
+            <div className="committee-header reveal">
+                <span className="committee-icon">{committee.icon}</span>
+                <h2 className="committee-title">{committee.name}</h2>
+            </div>
+
+            <LeadCard lead={committee.secretary} role="Secretary" type="committee" />
+
+            {committee.clubs.length > 0 && (
+                <div className="clubs-grid">
+                    {committee.clubs.map((club) => (
+                        <ClubCard key={club.name} club={club} />
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
 
 const Committees: React.FC = () => {
     return (
-        <section id="committees" className="committees">
-            <div className="container">
+        <section className="committees">
+            <div className="container committees__container">
                 <div className="section-header reveal">
-                    <h2>Our Committees</h2>
+                    <h2>Governance Hierarchy</h2>
                     <p>
-                        Three pillars driving student excellence across technical, cultural
-                        and sports domains
+                        A collaborative structure of committees and student-run clubs
                     </p>
                     <div className="section-divider"></div>
                 </div>
 
-                <div className="committees__grid">
-                    {committees.map((c, i) => (
-                        <CommitteeCard data={c} index={i} key={c.title} />
-                    ))}
-                </div>
+                {organizationData.map((committee) => (
+                    <CommitteeSection key={committee.id} committee={committee} />
+                ))}
             </div>
         </section>
     );

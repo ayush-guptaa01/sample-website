@@ -6,10 +6,10 @@ const SplashScreen: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
 
     useEffect(() => {
         const timers = [
-            setTimeout(() => setPhase('icons'), 800),
-            setTimeout(() => setPhase('tagline'), 2000),
-            setTimeout(() => setPhase('exit'), 3400),
-            setTimeout(() => onComplete(), 4200),
+            setTimeout(() => setPhase('icons'), 900),
+            setTimeout(() => setPhase('tagline'), 2400),
+            setTimeout(() => setPhase('exit'), 4200),
+            setTimeout(() => onComplete(), 5100),
         ];
         return () => timers.forEach(clearTimeout);
     }, [onComplete]);
@@ -34,32 +34,53 @@ const SplashScreen: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
                 <div className="splash__logo-pulse"></div>
             </div>
 
-            {/* Three pillar icons that orbit out */}
+            {/* Five pillar icons arranged in a pentagon */}
             <div className={`splash__pillars ${phase === 'icons' || phase === 'tagline' || phase === 'exit' ? 'splash__pillars--visible' : ''}`}>
+                {/* Top — Technical (90° = top) */}
                 <div className="splash__pillar splash__pillar--tech" title="Technical">
                     <div className="splash__pillar-icon">💻</div>
                     <div className="splash__pillar-label">Technical</div>
                 </div>
+                {/* Top-right — Cultural (18° offset from top) */}
                 <div className="splash__pillar splash__pillar--cultural" title="Cultural">
                     <div className="splash__pillar-icon">🎭</div>
                     <div className="splash__pillar-label">Cultural</div>
                 </div>
+                {/* Bottom-right — Sports */}
                 <div className="splash__pillar splash__pillar--sports" title="Sports">
                     <div className="splash__pillar-icon">⚽</div>
                     <div className="splash__pillar-label">Sports</div>
                 </div>
+                {/* Bottom-left — Welfare */}
+                <div className="splash__pillar splash__pillar--welfare" title="Welfare">
+                    <div className="splash__pillar-icon">🤝</div>
+                    <div className="splash__pillar-label">Welfare</div>
+                </div>
+                {/* Top-left — Academics */}
+                <div className="splash__pillar splash__pillar--academics" title="Academics">
+                    <div className="splash__pillar-icon">📚</div>
+                    <div className="splash__pillar-label">Academics</div>
+                </div>
             </div>
 
-            {/* Connecting lines from logo to pillars */}
+            {/* Connecting lines from logo to all 5 pillars */}
+            {/* Pentagon points at r=170, centre=200 — angles: -90, -18, 54, 126, 198 deg */}
             <svg className={`splash__lines ${phase === 'icons' || phase === 'tagline' || phase === 'exit' ? 'splash__lines--visible' : ''}`} viewBox="0 0 400 400">
-                <line x1="200" y1="200" x2="200" y2="60" className="splash__line" />
-                <line x1="200" y1="200" x2="80" y2="310" className="splash__line" />
-                <line x1="200" y1="200" x2="320" y2="310" className="splash__line" />
+                {/* Technical — top */}
+                <line x1="200" y1="200" x2="200" y2="30" className="splash__line" />
+                {/* Cultural — upper-right */}
+                <line x1="200" y1="200" x2="362" y2="112" className="splash__line" />
+                {/* Sports — lower-right */}
+                <line x1="200" y1="200" x2="300" y2="352" className="splash__line" />
+                {/* Welfare — lower-left */}
+                <line x1="200" y1="200" x2="100" y2="352" className="splash__line" />
+                {/* Academics — upper-left */}
+                <line x1="200" y1="200" x2="38" y2="112" className="splash__line" />
             </svg>
 
             {/* Title & Tagline */}
             <div className={`splash__text ${phase === 'tagline' || phase === 'exit' ? 'splash__text--visible' : ''}`}>
-                <h1 className="splash__title">Welfare Centre</h1>
+                <h1 className="splash__title">Activity Centre</h1>
                 <p className="splash__tagline">IIITV — International Campus Diu</p>
                 <div className="splash__divider"></div>
                 <p className="splash__motto">Empowering Excellence</p>

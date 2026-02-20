@@ -1,37 +1,38 @@
 import './Team.css';
-
-interface TeamMember {
-    name: string;
-    role: string;
-    emoji: string;
-}
-
-const team: TeamMember[] = [
-    { name: 'John Doe', role: 'President', emoji: '👔' },
-    { name: 'Jane Smith', role: 'Vice President', emoji: '🎯' },
-    { name: 'Alex Johnson', role: 'General Secretary — Technical', emoji: '💻' },
-    { name: 'Sarah Williams', role: 'General Secretary — Cultural', emoji: '🎭' },
-    { name: 'Mike Brown', role: 'General Secretary — Sports', emoji: '⚽' },
-    { name: 'Emily Davis', role: 'Treasurer', emoji: '💰' },
-    { name: 'Chris Wilson', role: 'Joint Secretary', emoji: '📋' },
-    { name: 'Anna Taylor', role: 'PR & Media Head', emoji: '📢' },
-];
+import { organizationData } from '../../data/organizationData';
 
 const Team: React.FC = () => {
+    // Collect all committee secretaries
+    const committeeSecs = organizationData.map(c => ({
+        name: c.secretary.name,
+        role: `${c.name} Secretary`,
+        emoji: c.icon
+    }));
+
+    // Collect all club secretaries and joint secretaries
+    const clubLeads = organizationData.flatMap(c =>
+        c.clubs.flatMap(club => [
+            { name: club.secretary.name, role: `${club.name} Secretary`, emoji: '📋' },
+            { name: club.jointSecretary.name, role: `${club.name} Joint Secretary`, emoji: '🤝' }
+        ])
+    );
+
+    const allTeam = [...committeeSecs, ...clubLeads];
+
     return (
         <section id="team" className="team">
             <div className="container">
                 <div className="section-header reveal">
-                    <h2>Our Team</h2>
-                    <p>The passionate leaders driving student governance forward</p>
+                    <h2>Our Leadership Team</h2>
+                    <p>The dedicated students leading our committees and clubs</p>
                     <div className="section-divider"></div>
                 </div>
 
                 <div className="team__grid">
-                    {team.map((member, i) => (
+                    {allTeam.map((member, i) => (
                         <div
                             className={`team__card reveal reveal-delay-${(i % 4) + 1}`}
-                            key={member.name}
+                            key={`${member.name}-${member.role}`}
                         >
                             <div className="team__card-avatar">
                                 <span className="team__card-avatar-alt">
