@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import './Navbar.css';
 
 const navLinks = [
@@ -70,6 +71,7 @@ const Navbar: React.FC = () => {
           <span className="navbar__logo-text">Student Activity Centre</span>
         </Link>
 
+        {/* Desktop links */}
         <ul className={`navbar__links ${isOpen ? 'navbar__links--open' : ''}`}>
           {navLinks.map((link) => {
             const hasDropdown = !!link.dropdown;
@@ -98,24 +100,34 @@ const Navbar: React.FC = () => {
                       {link.label} <span className="dropdown-arrow">▼</span>
                     </Link>
 
-                    <ul className={`navbar__dropdown ${dropdownOpen ? 'navbar__dropdown--open' : ''}`}>
-                      {link.dropdown?.map((sub) => (
-                        <li key={sub.label}>
-                          <a
-                            href={sub.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="navbar__dropdown-link"
-                            onClick={() => {
-                              setIsOpen(false);
-                              setDropdownOpen(false);
-                            }}
-                          >
-                            {sub.label}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
+                    <AnimatePresence>
+                      {dropdownOpen && (
+                        <motion.ul
+                          className={`navbar__dropdown ${dropdownOpen ? 'navbar__dropdown--open' : ''}`}
+                          initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 5, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                          transition={{ duration: 0.2, ease: "easeOut" }}
+                        >
+                          {link.dropdown?.map((sub) => (
+                            <li key={sub.label}>
+                              <a
+                                href={sub.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="navbar__dropdown-link"
+                                onClick={() => {
+                                  setIsOpen(false);
+                                  setDropdownOpen(false);
+                                }}
+                              >
+                                {sub.label}
+                              </a>
+                            </li>
+                          ))}
+                        </motion.ul>
+                      )}
+                    </AnimatePresence>
                   </div>
                 ) : (
                   <Link
