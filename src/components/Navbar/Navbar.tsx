@@ -10,11 +10,11 @@ const navLinks = [
     href: '/committees',
     external: true,
     dropdown: [
-      { label: 'Technical Committee', href: '/committees/technical' },
-      { label: 'Cultural Committee', href: '/committees/cultural' },
-      { label: 'Sports Committee', href: '/committees/sports' },
-      { label: 'Welfare Committee', href: '/committees/welfare' },
-      { label: 'Academic Committee', href: '/committees/academic' },
+      { label: 'Technical Committee', href: '#/committees/technical' },
+      { label: 'Cultural Committee', href: '#/committees/cultural' },
+      { label: 'Sports Committee', href: '#/committees/sports' },
+      { label: 'Welfare Committee', href: '#/committees/welfare' },
+      { label: 'Academic Committee', href: '#/committees/academic' },
     ]
   },
   { label: 'Contact', href: '/#contact', isAnchor: true, targetId: 'contact' },

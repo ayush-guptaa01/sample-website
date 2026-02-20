@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
 import './App.css';
 import useScrollReveal from './hooks/useScrollReveal';
@@ -25,18 +25,13 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="app">
         {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
         <ParticleBackground />
         <Navbar />
         <main>
           <Routes>
-            <Route path="/sample-website" element={<HomePage />} />
-            <Route path="/sample-website/committees" element={<CommitteesPage />} />
-            <Route path="/sample-website/committees/:id" element={<CommitteeDetailPage />} />
-            <Route path="/sample-website/events" element={<EventsPage />} />
-            {/* Fallback for local dev */}
             <Route path="/" element={<HomePage />} />
             <Route path="/committees" element={<CommitteesPage />} />
             <Route path="/committees/:id" element={<CommitteeDetailPage />} />
@@ -45,7 +40,7 @@ function App() {
         </main>
         <Footer />
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
